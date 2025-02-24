@@ -12,22 +12,21 @@
     <style>
         body {
             background-color: #1E73BE;
-            font-family: "Open Sans", sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            margin: 0;
         }
 
         .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 1200px;
-            padding: 5rem;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
@@ -36,33 +35,46 @@
         .container img {
             width: 100%;
             max-width: 300px;
-            margin: 0 auto;
+            margin: 0 auto 2rem auto;
             display: block;
         }
 
-        .container label {
+        .container h2 {
+            text-align: center;
+            color: #0E2B5C;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
             font-weight: bold;
             color: #0E2B5C;
         }
 
-        .container input {
+        .form-group input {
             width: 100%;
             padding: 10px;
-            margin: 10px 0 20px;
+            margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
 
-        .container input[type="file"]{
-            height: 20vh;
+        .form-group video, .form-group canvas {
+            display: block;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 300px;
         }
 
-        .container .tombol {
-            text-align: right;
-            margin-top: 1rem;
+        .form-group button {
+            display: block;
+            margin: 10px auto;
         }
 
-        .container button {
+        .btn-primary {
             width: 100%;
             max-width: 150px;
             padding: 10px;
@@ -74,8 +86,24 @@
             cursor: pointer;
         }
 
-        .container button:hover {
+        .btn-primary:hover {
             background-color: #165a9e;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            max-width: 150px;
+            padding: 10px;
+            background-color: #6c757d;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
         }
 
         .login-button {
@@ -92,44 +120,21 @@
         }
 
         .login-button:hover {
-            background-color: #165a9e; 
+            background-color: #165a9e;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
                 padding: 1rem;
             }
 
             .container img {
+                max-width: 150px;
+            }
+
+            .form-group video, .form-group canvas {
                 max-width: 200px;
-            }
-
-            .container button {
-                max-width: 100%;
-            }
-            
-            .login-button {
-                top: 15px;
-                right: 15px;
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                .container {
-                padding: 2rem;
-                grid-template-columns: 1fr;
-            }
-
-            .container img {
-                max-width: 200px;
-            }
-
-            .container input[type="file"] {
-                height: 15vh;
             }
 
             .login-button {
@@ -139,38 +144,100 @@
                 font-size: 12px;
             }
         }
-    }   
     </style>
 </head>
 <body>
     <a href="/login" class="login-button">Login</a>
-    <form method="POST" action="{{url('login')}}">
-        @csrf
-        <div class="container">
-            <div class="logo d-flex justify-content-center align-items-center">
-                <img src="{{ asset('assets/images/logo_desnet.png') }}" alt="Logo">
+    <div class="container">
+        <div class="logo d-flex justify-content-center align-items-center">
+            <img src="{{ asset('assets/images/logo_desnet.png') }}" alt="Logo">
+        </div>
+        <form method="POST" action="{{ route('submit') }}">
+            @csrf
+            <div class="form-group">
+                <label>Asal Instansi</label>
+                <input type="text" name="instansi" class="form-control" required>
             </div>
-            <div>
-                <label for="instansi">Asal Instansi*</label><br>
-                <input type="text" id="instansi" name="instansi" required><br>
-                <label for="nama">Nama*</label><br>
-                <input type="text" id="nama" name="nama" required><br>
-                <label for="nohp">Nomor HP*</label><br>
-                <input type="text" id="nohp" name="nohp" required><br>
-                <label for="tujuan">Tujuan*</label><br>
-                <input type="text" id="tujuan" name="tujuan" required><br>
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" name="nama" class="form-control" required>
             </div>
-            <div>
-                <label for="karyawan">Karyawan Tujuan*</label><br>
-                <input type="text" id="karyawan" name="karyawan" required><br>
-                <label for="identitas">Foto Identitas*</label><br>
-                <input type="file" id="identitas" name="identitas" required><br>
-                <div class="tombol">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group">
+                <label>Nomor HP</label>
+                <input type="text" name="nohp" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Tujuan</label>
+                <input type="text" name="tujuan" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Karyawan Tujuan</label>
+                <input type="text" name="karyawan" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Foto Identitas</label>
+                <button type="button" class="btn btn-secondary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#cameraModal">Ambil Foto</button>
+                <div class="text-start">
+                    <img id="preview" src="" alt="Preview Foto" style="display: none; width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+                <input type="hidden" id="foto_identitas" name="foto_identitas">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cameraModalLabel">Ambil Foto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <video id="video" autoplay style="width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius:5px;"></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <button type="button" id="snap" class="btn btn-primary mt-2">Capture</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById('snap');
+        const preview = document.getElementById('preview');
+        const foto_identitas = document.getElementById('foto_identitas');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Error accessing webcam: ", err);
+            });
+
+        snap.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/png');
+            foto_identitas.value = imageData;
+
+            //menampilkan gambar
+            preview.src = imageData;
+            preview.style.display = "block";
+
+            //tututp modal
+            let modal = bootstrap.Modal.getInstance(document.getElementById('cameraModal'));
+            modal.hide();
+        });
+    </script>
 </body>
 </html>

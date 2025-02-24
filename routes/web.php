@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KaryawanController;
-
+use App\Http\Controllers\PengunjungController;
 
 Route::get('/', function () {
     return view('index');
@@ -23,3 +23,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'dashboard'])->name('karyawan.dashboard');
 });
+
+Route::post('/', [PengunjungController::class, 'showForm'])->name('index');
+Route::post('/submit', [PengunjungController::class, 'submitForm'])->name('submit');
