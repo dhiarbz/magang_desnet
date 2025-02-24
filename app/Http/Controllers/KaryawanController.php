@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+
+class KaryawanController extends Controller
+{
+    public function dashboar()
+    {
+        return view('karyawan.dashboard');
+    }
+}
