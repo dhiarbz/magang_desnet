@@ -10,14 +10,19 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, $roles)
     {
-        if(!Auth::check()){
+        // Cek apakah user sudah login
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        $user = Auth::user();
-        if($user->role !== $roles){
-            abort(403,'unauthorized action');
+        // Ambil user yang sudah login
+        $user = Auth::guard('web')->user();
+        // Cek apakah role sesuai (mendukung banyak role, misalnya 'admin|manager')
+        $allowedRoles = explode('|', $roles);
+        if (!in_array($user->role, $allowedRoles)) {
+            abort(403, 'Unauthorized action');
         }
+
         return $next($request);
     }
 }

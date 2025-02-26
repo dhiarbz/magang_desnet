@@ -152,6 +152,7 @@
         <div class="logo d-flex justify-content-center align-items-center">
             <img src="{{ asset('assets/images/logo_desnet.png') }}" alt="Logo">
         </div>
+        
         <form method="POST" action="{{ route('submit') }}">
             @csrf
             <div class="form-group">

@@ -97,20 +97,20 @@
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <form method="POST" action="{{url('login')}}">
+        <form method="POST" action="{{ route('login.post')}}">
             @csrf
             <div class="mb-3">
                 <label for="email_karyawan">Email*</label>
-                <input type="text" id="email_karyawan" name="email_karyawan" class="form-control" required value="{{ old('email') }}">
+                <input type="text" id="email_karyawan" name="email_karyawan" class="form-control" required value="{{ old('email_karyawan') }}">
                 @if ($errors->has('email_karyawan'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                    <span class="text-danger">{{ $errors->first('email_karyawan') }}</span>
                 @endif
             </div>
             <div class="mb-3">
                 <label for="password">Password*</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-                @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                <input type="password" id="password_karyawan" name="password_karyawan" class="form-control" required>
+                @if ($errors->has('password_karyawan'))
+                    <span class="text-danger">{{ $errors->first('password_karyawan') }}</span>
                 @endif
             </div>
             <a href="#" class="lupa">Lupa Password?</a>

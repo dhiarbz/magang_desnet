@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password_karyawan');
             $table->enum('role',['admin','karyawan'])->default('karyawan');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

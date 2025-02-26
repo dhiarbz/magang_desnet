@@ -28,18 +28,15 @@ class AuthController extends Controller
             'email_karyawan' => $request->email_karyawan,
             'password' => $request->password_karyawan
         ];
-
-        // Pastikan menggunakan guard yang sesuai
-        if (Auth::guard('karyawan')->attempt($credentials)) {
-            $user = Auth::user();
-
-            // Redirect berdasarkan role
-            if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
-            } elseif ($user->role === 'karyawan') {
-                return redirect()->intended('/karyawan/dashboard');
-            }
+        $user = Karyawan::where('email_karyawan', $request->email_karyawan)->first();
+        Auth::guard('web')->login($user);
+        // Redirect berdasarkan role
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin/dashboard');
+        } elseif ($user->role === 'karyawan') {
+            return redirect()->intended('/karyawan/dashboard');
         }
+    
 
         // Jika login gagal
         return back()->withErrors([

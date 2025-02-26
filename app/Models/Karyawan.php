@@ -12,7 +12,7 @@ class Karyawan extends Authenticatable
     use Notifiable;
 
     protected $table = 'karyawans';
-    protected $primarykey = 'id_karyawan';
+    protected $primaryKey = 'id_karyawan';
     protected $fillable = [
         'nama_karyawan',
         'email_karyawan',
@@ -36,6 +36,6 @@ class Karyawan extends Authenticatable
 
     public function getAuthPassword()
     {
-        return $this->password;
-    }
+        return $this->password_karyawan;
+    }    
 }
