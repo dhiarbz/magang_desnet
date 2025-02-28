@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
-        return view('admin.dashboard');
+        return view('admin.index');
     }
 }

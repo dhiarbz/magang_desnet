@@ -16,12 +16,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //route untuk admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
 });
 
 // Route untuk karyawan
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
-    Route::get('/karyawan/dashboard', [KaryawanController::class, 'dashboard'])->name('karyawan.dashboard');
+    Route::get('/karyawan/index', [KaryawanController::class, 'index'])->name('karyawan.index');
 });
 
 Route::post('/', [PengunjungController::class, 'showForm'])->name('index');

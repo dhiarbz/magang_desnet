@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Buku Tamu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,7 +154,7 @@
             <img src="{{ asset('assets/images/logo_desnet.png') }}" alt="Logo">
         </div>
         
-        <form method="POST" action="{{ route('submit') }}">
+        <form method="POST" action="{{ route('submit') }}" id="buku-tamu">
             @csrf
             <div class="form-group">
                 <label>Asal Instansi</label>
@@ -173,7 +174,12 @@
             </div>
             <div class="form-group">
                 <label>Karyawan Tujuan</label>
-                <input type="text" name="karyawan" class="form-control" required>
+                <select name="karyawan" class="form-control" required>
+                    <option value="">Pilih Karyawan</option>
+                    @foreach($karyawan as $k)
+                        <option value="{{ $k->id_karyawan }}">{{ $k->nama_karyawan }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label>Foto Identitas</label>
@@ -238,6 +244,29 @@
             //tututp modal
             let modal = bootstrap.Modal.getInstance(document.getElementById('cameraModal'));
             modal.hide();
+        });
+    </script>
+    <script>
+         document.querySelector('#buku-tamu').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('/submit', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Data berhasil disimpan!');
+                    window.location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
     </script>
 </body>

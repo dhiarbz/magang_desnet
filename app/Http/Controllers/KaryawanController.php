@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
 {
-    public function dashboar()
+    public function index()
     {
-        return view('karyawan.dashboard');
+        return view('karyawan.index');
     }
 }

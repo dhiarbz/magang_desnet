@@ -32,9 +32,9 @@ class AuthController extends Controller
         Auth::guard('web')->login($user);
         // Redirect berdasarkan role
         if ($user->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/admin/index');
         } elseif ($user->role === 'karyawan') {
-            return redirect()->intended('/karyawan/dashboard');
+            return redirect()->intended('/karyawan/index');
         }
     
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
+use App\Models\Pengunjung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,7 +13,9 @@ class PengunjungController extends Controller
     // Menampilkan form buku tamu
     public function showForm()
     {
-        return view('index');
+        $karyawan = Karyawan::all();
+
+        return view('index',compact('Karyawan'));
     }
 
     // Menangani submit form
@@ -36,17 +40,17 @@ class PengunjungController extends Controller
 
         // Simpan data ke database (contoh sederhana)
         // Anda bisa menyesuaikan dengan model dan migrasi yang sudah dibuat
-        $data = [
+        Pengunjung::create ([
             'instansi' => $request->instansi,
             'nama' => $request->nama,
             'nohp' => $request->nohp,
             'tujuan' => $request->tujuan,
             'karyawan' => $request->karyawan,
             'foto_identitas' => $imageName, // Simpan nama file gambar
-        ];
+        ]);
 
         // Contoh: Simpan ke session (untuk sementara)
-        session()->flash('data', $data);
+        //session()->flash('data', $data);
 
         return response()->json(['success' => true]);
     }
