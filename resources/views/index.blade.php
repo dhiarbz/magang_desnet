@@ -184,6 +184,7 @@
 <body>
     <a href="/login" class="login-button">Login</a>
     <div class="container">
+        <h3 class="text-center mb-2">Buku Tamu</h3>
         <form method="POST" action="{{ route('submit') }}" id="buku-tamu">
             @csrf
             <div class="three-columns-grid">

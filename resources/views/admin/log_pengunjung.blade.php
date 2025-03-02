@@ -76,7 +76,7 @@
         <!-- Tabel Log Kunjungan -->
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
-                <thead class="table-dark text-center">
+                <thead class="table-light text-center">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nama Instansi</th>

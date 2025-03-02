@@ -152,23 +152,26 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('chartKunjungan').getContext('2d');
-        new Chart(ctx, {
+        var labels = @json($labels ?? []);
+        var data = @json($data ?? []);
+    
+        var ctx = document.getElementById('chartKunjungan').getContext('2d');
+        var chartKunjungan = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                labels: labels,
                 datasets: [{
                     label: 'Jumlah Kunjungan',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    data: data,
                 }]
             },
             options: {
-                responsive: true,
                 scales: {
-                    y: { beginAtZero: true }
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
         });

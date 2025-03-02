@@ -38,6 +38,12 @@ class AdminController extends Controller
 
     public function log_pengunjung(Request $request)
     {
+        $request->validate([
+            'tahun'=> 'nullable | integer |min:2020|max:' . date('Y'),
+            'bulan'=> 'nullable | integer |min:1|max:12',
+            'hari'=> 'nullable | integer |min:1|max:31',
+        ]);
+
         $query = Pengunjung::query();
 
         if($request->tahun){
@@ -125,10 +131,11 @@ class AdminController extends Controller
         if ($request->ajax()) {
             return response()->json([
                 'labels' => $labels,
-                'data' => $data
+                'data' => $data,
             ]);
         }
-    
+        dd($labels, $data);
         return view('admin.dashboard', compact('jumlahPengunjung', 'jumlahKaryawan', 'labels', 'data', 'filter'));
     }
+
 }
