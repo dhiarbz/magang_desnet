@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
@@ -127,10 +128,10 @@
             <li class="nav-item"><a href="{{route('admin.log_pengunjung')}}" class="nav-link">📑 <span>Laporan</span></a></li>
         </ul>
         <hr>
-        <a href="{{ route('logout') }}" class="nav-link text-light"  onclick="event.preventDefault(); document.getElementById('logout_form').submit();" aria-label="Logout">
+        <a href="{{ route('logout') }}" class="nav-link text-light"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             🔓 <span>Logout</span>
         </a>
-        <form action="{{route('logout')}}" id="logout_form" method="POST" style="display: none;">
+        <form action="{{route('logout')}}" id="logout_form" method="POST" class="d-none">
             @csrf
         </form>
     </div>
@@ -142,7 +143,7 @@
             <span class="me-2">🔵 {{ Auth::user()->nama_karyawan }}</span>
         </div>
     </div>
-    @include('admin.dashboard')
+    @yield('content')
 
     <script>
         function toggleSidebar() {

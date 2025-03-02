@@ -15,7 +15,7 @@ class PengunjungController extends Controller
     {
         $karyawan = Karyawan::all();
 
-        return view('index',compact('Karyawan'));
+        return view('index',compact('karyawan'));
     }
 
     // Menangani submit form
@@ -23,35 +23,38 @@ class PengunjungController extends Controller
     {
         // Validasi input
         $request->validate([
-            'instansi' => 'required|string',
+            'nama_instansi' => 'required|string',
             'nama' => 'required|string',
             'nohp' => 'required|string',
             'tujuan' => 'required|string',
-            'karyawan' => 'required|string',
+            'id_karyawan' => 'required',
             'foto_identitas' => 'required|string', // Gambar dalam format base64
         ]);
 
         // Simpan gambar ke storage
         $image = $request->foto_identitas;
-        $image = str_replace('data:image/jpeg;base64,', '', $image); // Hapus prefix base64
+        $image = str_replace('data:image/png;base64,', '', $image); // Hapus prefix base64
         $image = str_replace(' ', '+', $image); // Ganti spasi dengan +
-        $imageName = time() . '.jpeg'; // Nama file
+        $imageName = time() . '.png'; // Nama file
         Storage::disk('public')->put($imageName, base64_decode($image));
 
         // Simpan data ke database (contoh sederhana)
         // Anda bisa menyesuaikan dengan model dan migrasi yang sudah dibuat
         Pengunjung::create ([
-            'instansi' => $request->instansi,
-            'nama' => $request->nama,
-            'nohp' => $request->nohp,
-            'tujuan' => $request->tujuan,
-            'karyawan' => $request->karyawan,
-            'foto_identitas' => $imageName, // Simpan nama file gambar
+            'nama_instansi' => $request->nama_instansi,
+            'nama_pengunjung' => $request->nama,
+            'nomor_pengunjung' => $request->nohp,
+            'tujuan_pertemuan' => $request->tujuan,
+            'id_karyawan' => $request->id_karyawan,
+            'karyawan_dituju' => $request->id_karyawan,
+            'foto_identitas' => $imageName,
+            'tanggal_pertemuan' => now(), 
         ]);
 
         // Contoh: Simpan ke session (untuk sementara)
         //session()->flash('data', $data);
 
-        return response()->json(['success' => true]);
+        return redirect()->back();
+        // return redirect()->route('karyawan.index');
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
+use App\Models\Pengunjung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Karyawan;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller

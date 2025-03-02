@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,10 @@
     <title>Buku Tamu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
             background-color: #1E73BE;
@@ -17,8 +20,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
         }
 
         .container {
@@ -28,9 +32,16 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 1200px;
+        }
+
+        .three-columns-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
+        }
+
+        .three-columns-grid>* {
+            padding: 1rem;
         }
 
         .container img {
@@ -38,6 +49,7 @@
             max-width: 300px;
             margin: 0 auto 2rem auto;
             display: block;
+            margin-top: 45%;
         }
 
         .container h2 {
@@ -55,7 +67,8 @@
             color: #0E2B5C;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -63,7 +76,8 @@
             border-radius: 5px;
         }
 
-        .form-group video, .form-group canvas {
+        .form-group video,
+        .form-group canvas {
             display: block;
             margin: 10px auto;
             width: 100%;
@@ -77,7 +91,6 @@
 
         .btn-primary {
             width: 100%;
-            max-width: 150px;
             padding: 10px;
             background-color: #1E73BE;
             border: none;
@@ -93,7 +106,6 @@
 
         .btn-secondary {
             width: 100%;
-            max-width: 150px;
             padding: 10px;
             background-color: #6c757d;
             border: none;
@@ -125,16 +137,37 @@
         }
 
         @media (max-width: 768px) {
-            .container {
+            .three-columns-grid {
                 grid-template-columns: 1fr;
-                padding: 1rem;
+                display: block;
+                /* Change to a single column */
+            }
+
+            .container {
+                background: #fff;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 1200px;
+                /* max-height: 90vh; */
+                /* Set a maximum height */
+                /* overflow-y: auto; */
+                /* Allow scrolling if content exceeds max height */
+                /* margin: 20px 0; */
+                /* Add margin to create space above and below */
             }
 
             .container img {
-                max-width: 150px;
+                max-width: 200px;
             }
 
-            .form-group video, .form-group canvas {
+            .logo {
+                margin-top: 0;
+            }
+
+            .form-group video,
+            .form-group canvas {
                 max-width: 200px;
             }
 
@@ -147,49 +180,63 @@
         }
     </style>
 </head>
+
 <body>
     <a href="/login" class="login-button">Login</a>
     <div class="container">
-        <div class="logo d-flex justify-content-center align-items-center">
-            <img src="{{ asset('assets/images/logo_desnet.png') }}" alt="Logo">
-        </div>
-        
         <form method="POST" action="{{ route('submit') }}" id="buku-tamu">
             @csrf
-            <div class="form-group">
-                <label>Asal Instansi</label>
-                <input type="text" name="instansi" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Nama</label>
-                <input type="text" name="nama" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Nomor HP</label>
-                <input type="text" name="nohp" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Tujuan</label>
-                <input type="text" name="tujuan" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Karyawan Tujuan</label>
-                <select name="karyawan" class="form-control" required>
-                    <option value="">Pilih Karyawan</option>
-                    @foreach($karyawan as $k)
-                        <option value="{{ $k->id_karyawan }}">{{ $k->nama_karyawan }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Foto Identitas</label>
-                <button type="button" class="btn btn-secondary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#cameraModal">Ambil Foto</button>
-                <div class="text-start">
-                    <img id="preview" src="" alt="Preview Foto" style="display: none; width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px;">
+            <div class="three-columns-grid">
+                <div>
+                    <div class="logo d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('assets/images/logo_desnet.png') }}" alt="Logo">
+                    </div>
                 </div>
-                <input type="hidden" id="foto_identitas" name="foto_identitas">
+                <div>
+                    <div class="form-group">
+                        <label>Asal Instansi</label>
+                        <input type="text" name="nama_instansi" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" name="nama" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor HP</label>
+                        <input type="text" name="nohp" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tujuan</label>
+                        <input type="text" name="tujuan" class="form-control" required>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label>Karyawan Tujuan</label>
+                        <select name="id_karyawan" class="form-control" required>
+                            <option value="">Pilih Karyawan</option>
+                            @foreach ($karyawan as $k)
+                                @if ($k->role !== 'admin')
+                                    <option value="{{ $k->id_karyawan }}">{{ $k->nama_karyawan }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto Identitas</label>
+                        <button type="button" class="btn btn-secondary w-100 mb-3" data-bs-toggle="modal"
+                            data-bs-target="#cameraModal">Ambil Foto</button>
+                        <div class="text-start">
+                            <img id="preview" src="" alt="Preview Foto"
+                                style="display: none; width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px;">
+                        </div>
+                        <input type="hidden" id="foto_identitas" name="foto_identitas">
+                    </div>
+                    <div class="submit">
+                        <button type="submit" class="btn btn-primary ">Submit</button>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 
@@ -201,9 +248,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <video id="video" autoplay style="width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius:5px;"></video>
+                    <video id="video" autoplay
+                        style="width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius:5px;"></video>
                     <canvas id="canvas" style="display: none;"></canvas>
-                    <button type="button" id="snap" class="btn btn-primary mt-2">Capture</button>
+                    <button type="button" id="snap" class="btn btn-primary mt-2">Foto</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -212,7 +260,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
@@ -220,7 +270,9 @@
         const preview = document.getElementById('preview');
         const foto_identitas = document.getElementById('foto_identitas');
 
-        navigator.mediaDevices.getUserMedia({ video: true })
+        navigator.mediaDevices.getUserMedia({
+                video: true
+            })
             .then(stream => {
                 video.srcObject = stream;
             })
@@ -246,28 +298,29 @@
             modal.hide();
         });
     </script>
-    <script>
-         document.querySelector('#buku-tamu').addEventListener('submit', function (e) {
+    {{-- <script>
+        document.querySelector('#buku-tamu').addEventListener('submit', function(e) {
             e.preventDefault();
 
             const formData = new FormData(this);
 
             fetch('/submit', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Data berhasil disimpan!');
-                    window.location.reload();
-                }
-            })
-            .catch(error => console.error('Error:', error));
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Data berhasil disimpan!');
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
-    </script>
+    </script> --}}
 </body>
+
 </html>
