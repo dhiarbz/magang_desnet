@@ -5,22 +5,23 @@
     <div class="content-wrapper">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Tambah Pengunjung</h4>
-                <form action="{{ route('admin.fadd_pengunjung') }}" method="POST" class="form-sample">
+                <h4 class="card-title">Edit Pengunjung</h4>
+                <form action="{{ route('admin.fupdate_pengunjung', ['id' => $pengunjung->id_pengunjung]) }}" method="POST" class="form-sample">
                     @csrf
+                    @method('PUT')
                     <!-- Nama Instansi -->
                     <div class="form-group row mb-3">
                         <label for="instansi" class="col-sm-3 col-form-label">Nama Instansi</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="instansi" name="instansi" placeholder="Masukkan Nama Instansi" required>
+                            <input type="text" class="form-control" id="instansi" name="instansi" value="{{ $pengunjung->nama_instansi }}" required>
                         </div>
                     </div>
 
-                    <!-- Nama PIC -->
+                    <!-- Nama Pengunjung -->
                     <div class="form-group row mb-3">
-                        <label for="nama" class="col-sm-3 col-form-label">Nama PIC</label>
+                        <label for="nama" class="col-sm-3 col-form-label">Nama Pengunjung</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" required>
+                            <input type="text" class="form-control" id="nama" name="nama" value="{{ $pengunjung->nama_pengunjung }}" required>
                         </div>
                     </div>
 
@@ -28,7 +29,7 @@
                     <div class="form-group row mb-3">
                         <label for="nomor" class="col-sm-3 col-form-label">Nomor Pengunjung</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="nomor" name="nomor" placeholder="Masukkan Nomor" required>
+                            <input type="text" class="form-control" id="nomor" name="nomor" value="{{ $pengunjung->nomor_pengunjung }}" required>
                         </div>
                     </div>
 
@@ -36,7 +37,7 @@
                     <div class="form-group row mb-3">
                         <label for="tujuan" class="col-sm-3 col-form-label">Tujuan Pertemuan</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="Masukkan Tujuan Pertemuan" required>
+                            <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ $pengunjung->tujuan_pertemuan }}" required>
                         </div>
                     </div>
 
@@ -47,9 +48,9 @@
                             <select name="id_karyawan" class="form-control" required>
                                 <option value="">Pilih Karyawan</option>
                                 @foreach ($karyawan as $k)
-                                    @if ($k->role !== 'admin')
-                                        <option value="{{ $k->id_karyawan }}">{{ $k->nama_karyawan }}</option>
-                                    @endif
+                                    <option value="{{ $k->id_karyawan }}" {{ $pengunjung->id_karyawan == $k->id_karyawan ? 'selected' : '' }}>
+                                        {{ $k->nama_karyawan }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -60,10 +61,10 @@
                         <label for="foto" class="col-sm-3 col-form-label">Foto Identitas</label>
                         <div class="col-sm-9">
                             <button type="button" class="btn btn-secondary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#cameraModal">
-                                <i class="fas fa-camera"></i> Ambil Foto
+                                <i class="fas fa-camera"></i> Ambil Foto Baru
                             </button>
                             <div class="text-center">
-                                <img id="preview" src="" alt="Preview Foto" style="display: none; width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px;">
+                                <img id="preview" src="{{ asset('storage/' . $pengunjung->foto_identitas) }}" alt="Preview Foto" style="width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px;">
                             </div>
                             <input type="hidden" id="foto_identitas" name="foto_identitas">
                         </div>
@@ -74,7 +75,7 @@
                         <div class="col-sm-3"></div>
                         <div class="col-sm-9">
                             <button type="submit" class="btn btn-primary mr-2">
-                                <i class="fas fa-save"></i> Submit
+                                <i class="fas fa-save"></i> Update
                             </button>
                             <a href="{{ route('admin.view_pengunjung') }}" class="btn btn-light">
                                 <i class="fas fa-times"></i> Cancel
@@ -101,6 +102,9 @@
                 <button type="button" id="snap" class="btn btn-primary mt-3">
                     <i class="fas fa-camera"></i> Ambil Foto
                 </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>

@@ -22,7 +22,7 @@
         <div class="chart-container mt-2">
             <div class="card">
                     <div class="card-body">
-                        <form id="filterForm" method="GET" action="{{ route('admin.dashboard') }}">
+                        <form id="filterForm" name="filter" method="GET" action="{{ route('admin.index') }}">
                             <div class="row">
                                 <!-- Filter Tahun -->
                                 <div class="col-md-3">
@@ -34,7 +34,7 @@
                                         @endfor
                                     </select>
                                 </div>
-        
+                        
                                 <!-- Filter Bulan -->
                                 <div class="col-md-3">
                                     <label for="bulan" class="form-label">Bulan</label>
@@ -45,33 +45,33 @@
                                         @endfor
                                     </select>
                                 </div>
-        
-                                <!-- Filter Hari -->
+                        
+                                <!-- Filter Minggu -->
                                 <div class="col-md-3">
-                                    <label for="hari" class="form-label">Hari</label>
-                                    <select class="form-select" id="hari" name="hari">
-                                        <option value="">Pilih Hari</option>
-                                        @for ($i = 1; $i <= 31; $i++)
-                                            <option value="{{ $i }}" {{ request('hari') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                    <label for="minggu" class="form-label">Minggu</label>
+                                    <select class="form-select" id="minggu" name="minggu">
+                                        <option value="">Pilih Minggu</option>
+                                        @for ($i = 1; $i <= 4; $i++)
+                                            <option value="{{ $i }}" {{ request('minggu') == $i ? 'selected' : '' }}>Minggu {{ $i }}</option>
                                         @endfor
                                     </select>
                                 </div>
-        
+                        
                                 <!-- Tombol Filter dan Reset -->
                                 <div class="col-md-3 d-flex align-items-end">
                                     <button type="submit" class="btn btn-primary me-2">
                                         <i class="fas fa-filter"></i> Filter
                                     </button>
-                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
+                                    <a href="{{ route('admin.index') }}" class="btn btn-secondary">
                                         <i class="fas fa-sync"></i> Reset
                                     </a>
                                 </div>
-                            
                             </div>
                         </form>
                         <div class="card-body">
                             <canvas id="chartKunjungan" width="800" height="400"></canvas>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -85,6 +85,56 @@
     </footer>
 
     <!-- Load Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Script untuk menampilkan chart -->
+<script>
+    var labels = @json($labels);
+    var data = @json($data);
+
+    var ctx = document.getElementById('chartKunjungan').getContext('2d');
+    var chartKunjungan = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Jumlah Kunjungan',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                data: data,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Hari/Bulan/Tahun'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Kunjungan'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

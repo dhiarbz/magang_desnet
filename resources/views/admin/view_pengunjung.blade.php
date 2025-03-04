@@ -14,7 +14,7 @@
         <h3 class="mb-3">Data Pengunjung</h3>
 
         <!-- Tombol Tambah Data Pengunjung -->
-        <a class="btn btn-primary mb-3" style="max-width: 250px;" href="{{ route('admin.add_karyawan') }}">
+        <a class="btn btn-primary mb-3" style="max-width: 250px;" href="{{ route('admin.add_pengunjung') }}">
             <i class="fas fa-plus"></i> Tambah Data Pengunjung
         </a>
 
@@ -52,17 +52,19 @@
                             <td>{{ $p->tanggal_pertemuan }}</td>
                             <td>
                                 <!-- Tombol Edit -->
-                                <a href="{{ route('admin.update_karyawan', ['id' => $p->id_pengunjung]) }}" 
+                                <a href="{{ route('admin.update_pengunjung', ['id' => $p->id_pengunjung]) }}" 
                                    class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
 
-                                <!-- Tombol Delete -->
-                                <button onclick="confirmation(event)" 
-                                        class="btn btn-danger btn-sm" 
-                                        data-url="{{ route('admin.delete_karyawan', ['id' => $p->id_pengunjung]) }}">
-                                    <i class="fas fa-trash"></i>
+                               <!-- Tombol Delete -->
+                               <form action="{{ route('admin.delete_pengunjung', ['id' => $p->id_pengunjung]) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                    <i class="fas fa-trash"></i> Delete
                                 </button>
+                            </form>
                             </td>
                         </tr>
                     @endforeach

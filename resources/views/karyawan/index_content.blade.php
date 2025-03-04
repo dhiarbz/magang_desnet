@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
@@ -105,6 +106,12 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -115,16 +122,16 @@
             </a>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="{{route('karyawan.index')}}" class="nav-link active">📊 <span>Dashboard</span></a></li>
-            <li class="nav-item"><a href="{{route('karyawan.view_pengunjung')}}" class="nav-link">📂 <span>Data Pengunjung</span></a></li>
-            <li class="nav-item"><a href="{{route('karyawan.notifikasi')}}" class="nav-link">📂 <span>Notifikasi</span></a></li>
-            <li class="nav-item"><a href="{{route('karyawan.log_pengunjung')}}" class="nav-link">📑 <span>Laporan</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.index')}}" class="nav-link active">📊 <span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.view_karyawan')}}" class="nav-link">📄 <span>Data Karyawan</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.view_pengunjung')}}" class="nav-link">📂 <span>Data Pengunjung</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.log_pengunjung')}}" class="nav-link">📑 <span>Laporan</span></a></li>
         </ul>
         <hr>
-        <a href="{{ route('logout') }}" class="nav-link text-light"  onclick="event.preventDefault(); document.getElementById('logout_form').submit();" aria-label="Logout">
+        <a href="{{ route('logout') }}" class="nav-link text-light"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             🔓 <span>Logout</span>
         </a>
-        <form action="{{route('logout')}}" id="logout_form" method="POST" style="display: none;">
+        <form action="{{route('logout')}}" id="logout_form" method="POST" class="d-none">
             @csrf
         </form>
     </div>
@@ -136,13 +143,15 @@
             <span class="me-2">🔵 {{ Auth::user()->nama_karyawan }}</span>
         </div>
     </div>
-    @include('karyawan.dashboard')
+    @yield('content')
 
     <script>
         function toggleSidebar() {
             document.body.classList.toggle('collapsed');
         }
     </script>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </body>
 </html>

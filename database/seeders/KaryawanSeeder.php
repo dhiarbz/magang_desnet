@@ -23,5 +23,6 @@ class KaryawanSeeder extends Seeder
             'password_karyawan' => Hash::make('password123'), // Hash password
             'role' => 'karyawan'
         ]);
+
     }
 }

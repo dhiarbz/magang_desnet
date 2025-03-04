@@ -44,9 +44,13 @@
                                 </a>
 
                                 <!-- Tombol Delete -->
-                                <button onclick="confirmation(event)" class="btn btn-danger btn-sm" data-url="{{ route('admin.delete_karyawan', ['id' => $k->id_karyawan]) }}">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
+                                <form action="{{ route('admin.delete_karyawan', ['id' => $k->id_karyawan]) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
