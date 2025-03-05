@@ -34,7 +34,7 @@ class AdminController extends Controller
     }
 
     $jumlahPengunjung = $query->count();
-    $jumlahKaryawan = Karyawan::count();
+    $jumlahKaryawan = Karyawan::count();    
 
     // Data untuk chart
     $labels = [];

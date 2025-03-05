@@ -5,7 +5,7 @@
             <div class="card p-4 shadow-sm">
                 <div class="d-flex align-items-center">
                     <div>
-                        <h3 class="mb-0">120</h3> <!-- Angka Statistik -->
+                        <h3 class="mb-0">{{ $jumlahKunjungan }}</h3> <!-- Angka Statistik -->
                         <h5 class="text-muted">Kunjungan</h5>
                     </div>
                 </div>

@@ -39,6 +39,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::get('/karyawan/index', [KaryawanController::class, 'showAfterLogin'])->name('karyawan.index');
     Route::get('/karyawan/view_kunjungan', [KaryawanController::class, 'view_kunjungan'])->name('karyawan.view_kunjungan');
+    Route::get('/karyawan/add_kunjungan', [KaryawanController::class, 'add_kunjungan'])->name('karyawan.add_kunjungan');
+    Route::get('/karyawan/add_kunjungan/store', [KaryawanController::class, 'fadd_kunjungan'])->name('karyawan.fadd_kunjungan');
     Route::get('/karyawan/notifikasi', [KaryawanController::class, 'notifikasi'])->name('karyawan.notifikasi');
 
 });
