@@ -38,7 +38,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // Route untuk karyawan
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::get('/karyawan/index', [KaryawanController::class, 'showAfterLogin'])->name('karyawan.index');
-    
+    Route::get('/karyawan/view_kunjungan', [KaryawanController::class, 'view_kunjungan'])->name('karyawan.view_kunjungan');
+    Route::get('/karyawan/notifikasi', [KaryawanController::class, 'notifikasi'])->name('karyawan.notifikasi');
+
 });
 Route::get('/', [PengunjungController::class, 'showForm'])->name('index');
 Route::post('/submit', [PengunjungController::class, 'submitForm'])->name('submit');

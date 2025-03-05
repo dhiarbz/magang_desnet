@@ -105,6 +105,12 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -115,10 +121,10 @@
             </a>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="{{route('karyawan.index')}}" class="nav-link active">📊 <span>Dashboard</span></a></li>
-            <li class="nav-item"><a href="{{route('karyawan.view_pengunjung')}}" class="nav-link">📂 <span>Data Pengunjung</span></a></li>
-            <li class="nav-item"><a href="{{route('karyawan.notifikasi')}}" class="nav-link">📂 <span>Notifikasi</span></a></li>
-            <li class="nav-item"><a href="{{route('karyawan.log_pengunjung')}}" class="nav-link">📑 <span>Laporan</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.index')}}" class="nav-link active">📊 <span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.view_karyawan')}}" class="nav-link">📄 <span>Data Karyawan</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.view_pengunjung')}}" class="nav-link">📂 <span>Data Pengunjung</span></a></li>
+            <li class="nav-item"><a href="{{route('admin.log_pengunjung')}}" class="nav-link">📑 <span>Laporan</span></a></li>
         </ul>
         <hr>
         <a href="{{ route('logout') }}" class="nav-link text-light"  onclick="event.preventDefault(); document.getElementById('logout_form').submit();" aria-label="Logout">
@@ -136,13 +142,70 @@
             <span class="me-2">🔵 {{ Auth::user()->nama_karyawan }}</span>
         </div>
     </div>
-    @include('karyawan.dashboard')
+    @include('admin.dashboard')
 
     <script>
         function toggleSidebar() {
             document.body.classList.toggle('collapsed');
         }
     </script>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var labels = @json($labels);
+        var data = @json($data);
+    
+        var ctx = document.getElementById('chartKunjungan').getContext('2d');
+        var chartKunjungan = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah Kunjungan',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    data: data,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        enabled: true,
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Grafik Kunjungan'
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: @if($filter == 'bulan') 'Minggu' 
+                            @elseif($filter == 'minggu') 'Hari' 
+                            @endif
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Kunjungan'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

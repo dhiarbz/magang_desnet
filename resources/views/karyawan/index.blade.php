@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Karyawan Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
@@ -105,12 +106,23 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .chart-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+        .inbox {
+    max-width: 600px;
+    margin: auto;
+}
+
+.list-group-item {
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.list-group-item-warning {
+    background-color: #fff3cd;
+}
+
+.list-group-item-success {
+    background-color: #d4edda;
+}
     </style>
 </head>
 <body>
@@ -121,10 +133,8 @@
             </a>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="{{route('admin.index')}}" class="nav-link active">📊 <span>Dashboard</span></a></li>
-            <li class="nav-item"><a href="{{route('admin.view_karyawan')}}" class="nav-link">📄 <span>Data Karyawan</span></a></li>
-            <li class="nav-item"><a href="{{route('admin.view_pengunjung')}}" class="nav-link">📂 <span>Data Pengunjung</span></a></li>
-            <li class="nav-item"><a href="{{route('admin.log_pengunjung')}}" class="nav-link">📑 <span>Laporan</span></a></li>
+            <li class="nav-item"><a href="{{route('karyawan.index')}}" class="nav-link active">📊 <span>Dashboard</span></a></li>
+            <li class="nav-item"><a href="{{route('karyawan.view_kunjungan')}}" class="nav-link">📂 <span>Data Kunjungan</span></a></li>
         </ul>
         <hr>
         <a href="{{ route('logout') }}" class="nav-link text-light"  onclick="event.preventDefault(); document.getElementById('logout_form').submit();" aria-label="Logout">
@@ -138,11 +148,11 @@
     <div class="navbar">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         <div class="d-flex align-items-center">
-            
+            <i class="fas fa-bell me-3"></i>
             <span class="me-2">🔵 {{ Auth::user()->nama_karyawan }}</span>
         </div>
     </div>
-    @include('admin.dashboard')
+    @include('karyawan.dashboard')
 
     <script>
         function toggleSidebar() {
@@ -150,62 +160,5 @@
         }
     </script>
     
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var labels = @json($labels);
-        var data = @json($data);
-    
-        var ctx = document.getElementById('chartKunjungan').getContext('2d');
-        var chartKunjungan = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Jumlah Kunjungan',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    data: data,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        enabled: true,
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Grafik Kunjungan'
-                    }
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: @if($filter == 'bulan') 'Minggu' 
-                            @elseif($filter == 'minggu') 'Hari' 
-                            @endif
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Jumlah Kunjungan'
-                        },
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
